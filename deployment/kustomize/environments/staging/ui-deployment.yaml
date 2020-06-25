@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui-deployment 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ods
+      service: ui
+  template:
+    metadata:
+      labels:
+        app: ods
+        service: ui
+    spec:
+      containers:
+        - name: ui-service
+
+          env:
+            - name: AUTH_SERVICE_URL
+              value: "{{BASE_URL}}auth"
+            - name: UI_BASE_URL
+              value: "{{BASE_URL}}"
+            - name: CORE_SERVICE_URL
+              value: "{{BASE_URL}}api/core"
+            - name: STORAGE_SERVICE_URL
+              value: "{{BASE_URL}}api/storage"
+            - name: TRANSFORMATION_SERVICE_URL
+              value: "{{BASE_URL}}api/transformation"

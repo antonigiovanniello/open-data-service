@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transformation-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ods
+      service: transformation
+  template:
+    metadata:
+      labels:
+        app: ods
+        service: transformation
+    spec:
+      containers:
+        - name: transformation-service
+          image: docker.pkg.github.com/jvalue/open-data-service/transformation:latest
+          imagePullPolicy: Always
+      
+          env:
+            - name: AUTH_ENABLED
+              value: "false"
+        
+          ports:
+            - containerPort: 8080
+
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 60
+            successThreshold: 1
+            timeoutSeconds: 10
+
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 60
+            successThreshold: 1
+            timeoutSeconds: 10
