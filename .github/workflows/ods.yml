@@ -36,6 +36,29 @@ jobs:
           name: adapter-artifact
           path: adapter.tar
 
+  # ----------------- AUTH SERVICE --------------------
+
+  auth-build:
+    name: Auth Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build and Test
+        run: |
+          docker-compose -f docker-compose.yml build auth
+
+      - name: Save Docker image as artifact
+        run: |
+          IMAGE_ID=$(sed -n 's/^DOCKER_REGISTRY=//p' .env)/auth
+          docker save $IMAGE_ID > auth.tar
+
+      - name: Upload Docker image as artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: auth-artifact
+          path: auth.tar
 
   # ----------------- SCHEDULER SERVICE --------------------
 
@@ -157,7 +180,8 @@ jobs:
           name: transformation-artifact
           path: transformation.tar
 
-    # ----------------- NOTIFICATION SERVICE --------------------
+
+  # ----------------- NOTIFICATION SERVICE --------------------
 
   notification-build:
     name: Notification Build & Test
@@ -220,7 +244,7 @@ jobs:
     name: Systemtest
     runs-on: ubuntu-latest
 
-    needs: [adapter-build, notification-build, scheduler-build, storage-build, transformation-build, ui-build]
+    needs: [adapter-build, auth-build, notification-build, scheduler-build, storage-build, transformation-build, ui-build]
 
     steps:
       - uses: actions/checkout@v2
@@ -301,6 +325,40 @@ jobs:
           docker tag $IMAGE_ID $IMAGE_ID:latest
 
           docker push $IMAGE_ID:$ADAPTER_VERSION
+          docker push $IMAGE_ID:latest
+
+  auth_upload:
+    name: Auth Publish
+    runs-on: ubuntu-latest
+
+    needs: [systemtest]
+
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Download auth artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: auth-artifact
+
+
+      - name: Load Docker Image from artifact
+        run: |
+          docker load -i ./auth-artifact/auth.tar
+
+      - name: Auth Push to registry
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+
+          IMAGE_ID=$(sed -n 's/^DOCKER_REGISTRY=//p' .env)/auth
+
+          AUTH_VERSION=$(grep "VERSION" ./auth/version.txt | awk '{print $3}' | sed 's/[,"]//g')
+
+          docker tag $IMAGE_ID $IMAGE_ID:$AUTH_VERSION
+          docker tag $IMAGE_ID $IMAGE_ID:latest
+
+          docker push $IMAGE_ID:$AUTH_VERSION
           docker push $IMAGE_ID:latest
 
   scheduler_upload:
@@ -480,3 +538,20 @@ jobs:
 
           docker push $IMAGE_ID:$UI_VERSION
           docker push $IMAGE_ID:latest
+
+  deploy:
+    name: Deploy ODS
+    runs-on: ubuntu-latest
+
+    needs: [adapter_upload, core_upload, scheduler_upload, storage_upload, transformation_upload, notification_upload, ui_upload]
+
+    steps:
+      - name: Prepare deployment
+        run: |
+          ./deployment/mk-kubeconfig.sh
+
+      - uses: azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ./deployment/kube.config
+        id: setcontext
