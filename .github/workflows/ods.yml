@@ -547,8 +547,9 @@ jobs:
 
     if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/kubernetes'
     steps:
+      - uses: actions/checkout@v2
+
       - run: |
-          ls -al
           ./deployment/mk-kubeconfig.sh
 
       - uses: Azure/k8s-set-context@v1
