@@ -367,7 +367,7 @@ jobs:
 
     needs: [systemtest]
 
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/kubernetes'
     steps:
       - uses: actions/checkout@v2
 
@@ -400,7 +400,7 @@ jobs:
 
     needs: [systemtest]
 
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/kubernetes'
     steps:
       - uses: actions/checkout@v2
 
@@ -446,7 +446,7 @@ jobs:
 
     needs: [systemtest]
 
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/kubernetes'
     steps:
       - uses: actions/checkout@v2
 
@@ -479,7 +479,7 @@ jobs:
 
     needs: [systemtest]
 
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/kubernetes'
     steps:
       - uses: actions/checkout@v2
 
@@ -512,7 +512,7 @@ jobs:
 
     needs: [systemtest]
 
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/kubernetes'
     steps:
       - uses: actions/checkout@v2
 
@@ -539,19 +539,27 @@ jobs:
           docker push $IMAGE_ID:$UI_VERSION
           docker push $IMAGE_ID:latest
 
-#  deploy:
-#    name: Deploy ODS
-#    runs-on: ubuntu-latest
-#
-#    needs: [adapter_upload, core_upload, scheduler_upload, storage_upload, transformation_upload, notification_upload, ui_upload]
-#
-#    steps:
-#      - name: Prepare deployment
-#        run: |
-#          ./deployment/mk-kubeconfig.sh
-#
-#      - uses: azure/k8s-set-context@v1
-#        with:
-#          method: kubeconfig
-#          kubeconfig: ./deployment/kube.config
-#        id: setcontext
+  deploy:
+    name: Deploy ODS
+    runs-on: ubuntu-latest
+
+    needs: [adapter_upload, scheduler_upload, storage_upload, transformation_upload, notification_upload, ui_upload]
+
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/kubernetes'
+    steps:
+      - run: |
+          ./deployment/mk-kubeconfig.sh
+
+      - uses: Azure/k8s-set-context@v1
+        with:
+          kubeconfig: ./deployment/kube.config
+
+      - uses: azure/k8s-bake@v1
+        with:
+          renderEngine: 'kustomize'
+          kustomizationPath: './deployment/kustomize/'
+          kubectl-version: 'latest'
+
+      - uses: Azure/k8s-deploy@v1
+        with:
+          manifests: ${{ steps.bake.outputs.manifestsBundle }}

@@ -9,23 +9,23 @@ spec:
   rules:
   - http:
       paths:
-      - path: /api/core(/|$)(.*)
+      - path: http://ods.cs.fau.de/api/core(/|$)(.*)
         backend:
           serviceName: core-service
           servicePort: 8080
-      - path: /api/transformation(/|$)(.*)
+      - path: http://ods.cs.fau.de/api/transformation(/|$)(.*)
         backend:
           serviceName: transformation-service
           servicePort: 8080
-      - path: /api/storage(/|$)(.*)
+      - path: http://ods.cs.fau.de/api/storage(/|$)(.*)
         backend:
           serviceName: storage-service
           servicePort: 3000
-      - path: /auth(/|$)(.*)
+      - path: http://ods.cs.fau.de/auth(/|$)(.*)
         backend:
           serviceName: auth-service
           servicePort: 8080
-      - path: /
+      - path: http://ods.cs.fau.de/
         backend:
           serviceName: ui-service
           servicePort: 8080
