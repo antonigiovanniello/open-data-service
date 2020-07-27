@@ -299,7 +299,7 @@ jobs:
 
     needs: [systemtest]
 
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/kubernetes'
     steps:
       - uses: actions/checkout@v2
 
@@ -333,7 +333,7 @@ jobs:
 
     needs: [systemtest]
 
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/kubernetes'
     steps:
       - uses: actions/checkout@v2
 
@@ -543,7 +543,7 @@ jobs:
     name: Deploy ODS
     runs-on: ubuntu-latest
 
-    needs: [adapter_upload, scheduler_upload, storage_upload, transformation_upload, notification_upload, ui_upload]
+    needs: [auth_upload, adapter_upload, scheduler_upload, storage_upload, transformation_upload, notification_upload, ui_upload]
 
     if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/kubernetes'
     steps:
