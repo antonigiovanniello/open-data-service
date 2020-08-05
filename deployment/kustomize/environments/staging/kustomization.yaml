@@ -4,7 +4,6 @@ kind: Kustomization
 bases:
   - ../../base/adapter
   - ../../base/auth
-  - ../../base/core
   - ../../base/hpa
   - ../../base/scheduler
   - ../../base/storage

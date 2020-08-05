@@ -22,6 +22,6 @@ spec:
             - name: DATABASE_PW
               value: "ods_pw"
 
-          restartPolicy: Never
+      restartPolicy: Never
 
   backoffLimit: 4
