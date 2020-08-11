@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: ui-service
-          image: docker.pkg.github.com/jvalue/open-data-service/ui:latest
+          image: jvalue/open-data-service/ui:latest
           imagePullPolicy: Always
 
           ports:

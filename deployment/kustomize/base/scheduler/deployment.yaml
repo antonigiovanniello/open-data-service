@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: scheduler-service
-          image: docker.pkg.github.com/jvalue/open-data-service/scheduler:latest
+          image: jvalue/open-data-service/scheduler:latest
           imagePullPolicy: Always
 
           env:

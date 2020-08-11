@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: adapter-service
-          image: docker.pkg.github.com/jvalue/open-data-service/adapter:latest
+          image: jvalue/open-data-service/adapter:latest
           imagePullPolicy: Always
 
           ports:

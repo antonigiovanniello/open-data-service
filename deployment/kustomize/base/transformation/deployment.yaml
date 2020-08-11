@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: transformation-service
-          image: docker.pkg.github.com/jvalue/open-data-service/transformation:latest
+          image: jvalue/open-data-service/transformation:latest
           imagePullPolicy: Always
 
           ports:
