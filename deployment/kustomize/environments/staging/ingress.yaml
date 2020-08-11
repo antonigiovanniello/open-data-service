@@ -17,10 +17,6 @@ spec:
         backend:
           serviceName: storage-service
           servicePort: 3000
-      - path: /auth(/|$)(.*)
-        backend:
-          serviceName: auth-service
-          servicePort: 8080
       - path: /
         backend:
           serviceName: ui-service

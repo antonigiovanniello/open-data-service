@@ -18,8 +18,6 @@ spec:
         - name: ui-service
 
           env:
-            - name: AUTH_SERVICE_URL
-              value: "http://ods.cs.fau.de/auth"
             - name: UI_BASE_URL
               value: "http://ods.cs.fau.de"
             - name: CORE_SERVICE_URL
