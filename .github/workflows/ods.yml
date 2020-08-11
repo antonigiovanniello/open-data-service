@@ -304,8 +304,14 @@ jobs:
           docker push $IMAGE_ID:latest
 
           echo "${{ secrets.DOCKERHUB_PW }}" | docker login registry-1.docker.io -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
-          docker push $IMAGE_ID:$ADAPTER_VERSION
-          docker push $IMAGE_ID:latest
+
+          DH_IMAGE_ID=$(sed -n 's/^DOCKER_REGISTRY=//p' .dockerhub.env)/adapter
+
+          docker tag $IMAGE_ID $DH_IMAGE_ID:$ADAPTER_VERSION
+          docker tag $IMAGE_ID $DHIMAGE_ID:latest
+
+          docker push $DH_IMAGE_ID:$ADAPTER_VERSION
+          docker push $DH_IMAGE_ID:latest
 
 
   scheduler_upload:
@@ -342,8 +348,14 @@ jobs:
           docker push $IMAGE_ID:latest
 
           echo "${{ secrets.DOCKERHUB_PW }}" | docker login registry-1.docker.io -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
-          docker push $IMAGE_ID:$SCHEDULER_VERSION
-          docker push $IMAGE_ID:latest
+
+          DH_IMAGE_ID=$(sed -n 's/^DOCKER_REGISTRY=//p' .dockerhub.env)/scheduler
+
+          docker tag $IMAGE_ID $DH_IMAGE_ID:$SCHEDULER_VERSION
+          docker tag $IMAGE_ID $DH_IMAGE_ID:latest
+
+          docker push $DH_IMAGE_ID:$SCHEDULER_VERSION
+          docker push $DH_IMAGE_ID:latest
 
   storage_upload:
     name: Storage Publish
@@ -392,11 +404,21 @@ jobs:
           docker push $IMAGE_ID_LIQUIBASE:latest
 
           echo "${{ secrets.DOCKERHUB_PW }}" | docker login registry-1.docker.io -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
-          docker push $IMAGE_ID_STORAGE:$STORAGE_VERSION
-          docker push $IMAGE_ID_STORAGE:latest
 
-          docker push $IMAGE_ID_LIQUIBASE:$STORAGE_VERSION
-          docker push $IMAGE_ID_LIQUIBASE:latest
+          DH_IMAGE_ID_STORAGE=$(sed -n 's/^DOCKER_REGISTRY=//p' .dockerhub.env)/storage
+          DH_IMAGE_ID_LIQUIBASE=$(sed -n 's/^DOCKER_REGISTRY=//p' .dockerhub.env)/storage-db-liquibase
+
+          docker tag $IMAGE_ID_STORAGE $DH_IMAGE_ID_STORAGE:$STORAGE_VERSION
+          docker tag $IMAGE_ID_STORAGE $DH_IMAGE_ID_STORAGE:latest
+
+          docker tag $IMAGE_ID_LIQUIBASE $DH_IMAGE_ID_LIQUIBASE:$STORAGE_VERSION
+          docker tag $IMAGE_ID_LIQUIBASE $DH_IMAGE_ID_LIQUIBASE:latest
+
+          docker push $DH_IMAGE_ID_STORAGE:$STORAGE_VERSION
+          docker push $DH_IMAGE_ID_STORAGE:latest
+
+          docker push $DH_IMAGE_ID_LIQUIBASE:$STORAGE_VERSION
+          docker push $DH_IMAGE_ID_LIQUIBASE:latest
 
   transformation_upload:
     name: Transformation Publish
@@ -432,8 +454,14 @@ jobs:
           docker push $IMAGE_ID:latest
 
           echo "${{ secrets.DOCKERHUB_PW }}" | docker login registry-1.docker.io -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
-          docker push $IMAGE_ID:$TRANSFORMATION_VERSION
-          docker push $IMAGE_ID:latest
+
+          DH_IMAGE_ID=$(sed -n 's/^DOCKER_REGISTRY=//p' .dockerhub.env)/transformation
+
+          docker tag $IMAGE_ID $DH_IMAGE_ID:$TRANSFORMATION_VERSION
+          docker tag $IMAGE_ID $DH_IMAGE_ID:latest
+
+          docker push $DH_IMAGE_ID:$TRANSFORMATION_VERSION
+          docker push $DH_IMAGE_ID:latest
 
   notification_upload:
     name: Notifcation Publish
@@ -469,8 +497,14 @@ jobs:
           docker push $IMAGE_ID:latest
 
           echo "${{ secrets.DOCKERHUB_PW }}" | docker login registry-1.docker.io -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
-          docker push $IMAGE_ID:$NOTIFICATION_VERSION
-          docker push $IMAGE_ID:latest
+
+          DH_IMAGE_ID=$(sed -n 's/^DOCKER_REGISTRY=//p' .dockerhub.env)/notification
+
+          docker tag $IMAGE_ID $DH_IMAGE_ID:$NOTIFICATION_VERSION
+          docker tag $IMAGE_ID $DH_IMAGE_ID:latest
+
+          docker push $DH_IMAGE_ID:$NOTIFICATION_VERSION
+          docker push $DH_IMAGE_ID:latest
 
   ui_upload:
     name: UI Publish
@@ -506,8 +540,14 @@ jobs:
           docker push $IMAGE_ID:latest
 
           echo "${{ secrets.DOCKERHUB_PW }}" | docker login registry-1.docker.io -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
-          docker push $IMAGE_ID:$UI_VERSION
-          docker push $IMAGE_ID:latest
+
+          DH_IMAGE_ID=$(sed -n 's/^DOCKER_REGISTRY=//p' .dockerhub.env)/ui
+
+          docker tag $IMAGE_ID $DH_IMAGE_ID:$UI_VERSION
+          docker tag $IMAGE_ID $DH_IMAGE_ID:latest
+
+          docker push $DH_IMAGE_ID:$UI_VERSION
+          docker push $DH_IMAGE_ID:latest
 
   deploy:
     name: Deploy ODS to k8s
