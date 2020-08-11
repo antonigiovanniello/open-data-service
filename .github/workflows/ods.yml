@@ -413,7 +413,7 @@ jobs:
           docker tag $IMAGE_ID_LIQUIBASE "${DH_IMAGE_ID}":storage-db-liquibase-"${STORAGE_VERSION}"
           docker tag $IMAGE_ID_LIQUIBASE "${DH_IMAGE_ID}":storage-db-liquibase-latest
 
-          docker push "${DH_IMAGE_ID}":storage-"${STORAGE_VERSION}
+          docker push "${DH_IMAGE_ID}":storage-"${STORAGE_VERSION}"
           docker push "${DH_IMAGE_ID}":storage-latest
 
           docker push "${DH_IMAGE_ID}":storage-db-liquibase-"${STORAGE_VERSION}"
@@ -500,7 +500,7 @@ jobs:
           DH_IMAGE_ID=$(sed -n 's/^DOCKER_REGISTRY=//p' .dockerhub.env)
 
           docker tag $IMAGE_ID "${DH_IMAGE_ID}":notification-"${NOTIFICATION_VERSION}"
-          docker tag $IMAGE_ID "${DH_IMAGE_ID}":notificationlatest
+          docker tag $IMAGE_ID "${DH_IMAGE_ID}":notification-latest
 
           docker push "${DH_IMAGE_ID}":notification-"${NOTIFICATION_VERSION}"
           docker push "${DH_IMAGE_ID}":notification-latest
