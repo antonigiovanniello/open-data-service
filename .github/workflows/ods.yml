@@ -307,11 +307,11 @@ jobs:
 
           DH_IMAGE_ID=$(sed -n 's/^DOCKER_REGISTRY=//p' .dockerhub.env)/
 
-          docker tag $IMAGE_ID ${{ env.DH_IMAGE_ID }}:adapter-${{ env.ADAPTER_VERSION }}
-          docker tag $IMAGE_ID ${{ env.DH_IMAGE_ID }}:adapter-latest
+          docker tag $IMAGE_ID "${DH_IMAGE_ID}":adapter-"${ADAPTER_VERSION}"
+          docker tag $IMAGE_ID "${DH_IMAGE_ID}":adapter-latest
 
-          docker push ${{ env.DH_IMAGE_ID }}:adapter-${{ env.ADAPTER_VERSION }}
-          docker push ${{ env.DH_IMAGE_ID }}:adapter-latest
+          docker push "${DH_IMAGE_ID}":adapter-"${ADAPTER_VERSION}"
+          docker push "${DH_IMAGE_ID}":adapter-latest
 
 
   scheduler_upload:
@@ -351,11 +351,11 @@ jobs:
 
           DH_IMAGE_ID=$(sed -n 's/^DOCKER_REGISTRY=//p' .dockerhub.env)/
 
-          docker tag $IMAGE_ID ${{ env.DH_IMAGE_ID }}:scheduler-${{ env.SCHEDULER_VERSION }}
-          docker tag $IMAGE_ID ${{ env.DH_IMAGE_ID }}:scheduler-latest
+          docker tag $IMAGE_ID "${DH_IMAGE_ID}":scheduler-"${SCHEDULER_VERSION}""
+          docker tag $IMAGE_ID "${DH_IMAGE_ID}":scheduler-latest
 
-          docker push ${{ env.DH_IMAGE_ID }}:scheduler-${{ env.SCHEDULER_VERSION }}
-          docker push ${{ env.DH_IMAGE_ID }}:scheduler-latest
+          docker push "${DH_IMAGE_ID}":scheduler-"${SCHEDULER_VERSION}"
+          docker push "${DH_IMAGE_ID}":scheduler-latest
 
   storage_upload:
     name: Storage Publish
@@ -407,17 +407,17 @@ jobs:
 
           DH_IMAGE_ID=$(sed -n 's/^DOCKER_REGISTRY=//p' .dockerhub.env)/
 
-          docker tag $IMAGE_ID_STORAGE ${{ env.DH_IMAGE_ID }}:storage-${{ env.STORAGE_VERSION }}
-          docker tag $IMAGE_ID_STORAGE ${{ env.DH_IMAGE_ID }}:storage-latest
+          docker tag $IMAGE_ID_STORAGE "${DH_IMAGE_ID}":storage-"${STORAGE_VERSION}"
+          docker tag $IMAGE_ID_STORAGE "${DH_IMAGE_ID}":storage-latest
 
-          docker tag $IMAGE_ID_LIQUIBASE ${{ env.DH_IMAGE_ID }}:storage-db-liquibase-${{ env.STORAGE_VERSION }}
-          docker tag $IMAGE_ID_LIQUIBASE ${{ env.DH_IMAGE_ID }}:storage-db-liquibase-latest
+          docker tag $IMAGE_ID_LIQUIBASE "${DH_IMAGE_ID}":storage-db-liquibase-"${STORAGE_VERSION}"
+          docker tag $IMAGE_ID_LIQUIBASE "${DH_IMAGE_ID}":storage-db-liquibase-latest
 
-          docker push ${{ env.DH_IMAGE_ID }}:storage-${{ env.STORAGE_VERSION }}
-          docker push ${{ env.DH_IMAGE_ID }}:storage-latest
+          docker push "${DH_IMAGE_ID}":storage-"${STORAGE_VERSION}
+          docker push "${DH_IMAGE_ID}":storage-latest
 
-          docker push ${{ env.DH_IMAGE_ID }}:storage-db-liquibase-${{ env.STORAGE_VERSION }}
-          docker push ${{ env.DH_IMAGE_ID }}:storage-db-liquibase-latest
+          docker push "${DH_IMAGE_ID}":storage-db-liquibase-"${STORAGE_VERSION}"
+          docker push "${DH_IMAGE_ID}":storage-db-liquibase-latest
 
   transformation_upload:
     name: Transformation Publish
@@ -456,11 +456,11 @@ jobs:
 
           DH_IMAGE_ID=$(sed -n 's/^DOCKER_REGISTRY=//p' .dockerhub.env)/
 
-          docker tag $IMAGE_ID ${{ env.DH_IMAGE_ID }}:transformation-${{ env.TRANSFORMATION_VERSION }}
-          docker tag $IMAGE_ID ${{ env.DH_IMAGE_ID }}:transformation-latest
+          docker tag $IMAGE_ID "${DH_IMAGE_ID}":transformation-"${TRANSFORMATION_VERSION}"
+          docker tag $IMAGE_ID "${DH_IMAGE_ID}":transformation-latest
 
-          docker push ${{ env.DH_IMAGE_ID }}:transformation-${{ env.TRANSFORMATION_VERSION }}
-          docker push ${{ env.DH_IMAGE_ID }}:transformation-latest
+          docker push "${DH_IMAGE_ID}":transformation-"${TRANSFORMATION_VERSION}"
+          docker push "${DH_IMAGE_ID}":transformation-latest
 
   notification_upload:
     name: Notifcation Publish
@@ -499,11 +499,11 @@ jobs:
 
           DH_IMAGE_ID=$(sed -n 's/^DOCKER_REGISTRY=//p' .dockerhub.env)/
 
-          docker tag $IMAGE_ID ${{ env.DH_IMAGE_ID }}:notification-${{ env.NOTIFICATION_VERSION }}
-          docker tag $IMAGE_ID ${{ env.DH_IMAGE_ID }}:notificationlatest
+          docker tag $IMAGE_ID "${DH_IMAGE_ID}":notification-"${NOTIFICATION_VERSION}"
+          docker tag $IMAGE_ID "${DH_IMAGE_ID}":notificationlatest
 
-          docker push ${{ env.DH_IMAGE_ID }}:notification-${{ env.NOTIFICATION_VERSION }}
-          docker push ${{ env.DH_IMAGE_ID }}:notification-latest
+          docker push "${DH_IMAGE_ID}":notification-"${NOTIFICATION_VERSION}"
+          docker push "${DH_IMAGE_ID}":notification-latest
 
   ui_upload:
     name: UI Publish
@@ -542,11 +542,11 @@ jobs:
 
           DH_IMAGE_ID=$(sed -n 's/^DOCKER_REGISTRY=//p' .dockerhub.env)/
 
-          docker tag $IMAGE_ID ${{ env.DH_IMAGE_ID }}:ui-${{ env.UI_VERSION }}
-          docker tag $IMAGE_ID ${{ env.DH_IMAGE_ID }}:ui-latest
+          docker tag $IMAGE_ID "${DH_IMAGE_ID}":ui-"${UI_VERSION}"
+          docker tag $IMAGE_ID "${DH_IMAGE_ID}":ui-latest
 
-          docker push ${{ env.DH_IMAGE_ID }}:ui-${{ env.UI_VERSION }}
-          docker push ${{ env.DH_IMAGE_ID }}:ui-latest
+          docker push "${DH_IMAGE_ID}":ui-"${UI_VERSION}"
+          docker push "${DH_IMAGE_ID}":ui-latest
 
   deploy:
     name: Deploy ODS to k8s
