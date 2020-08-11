@@ -305,7 +305,7 @@ jobs:
 
           echo "${{ secrets.DOCKERHUB_PW }}" | docker login registry-1.docker.io -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
 
-          DH_IMAGE_ID=$(sed -n 's/^DOCKER_REGISTRY=//p' .dockerhub.env)/
+          DH_IMAGE_ID=$(sed -n 's/^DOCKER_REGISTRY=//p' .dockerhub.env)
 
           docker tag $IMAGE_ID "${DH_IMAGE_ID}":adapter-"${ADAPTER_VERSION}"
           docker tag $IMAGE_ID "${DH_IMAGE_ID}":adapter-latest
@@ -349,9 +349,9 @@ jobs:
 
           echo "${{ secrets.DOCKERHUB_PW }}" | docker login registry-1.docker.io -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
 
-          DH_IMAGE_ID=$(sed -n 's/^DOCKER_REGISTRY=//p' .dockerhub.env)/
+          DH_IMAGE_ID=$(sed -n 's/^DOCKER_REGISTRY=//p' .dockerhub.env)
 
-          docker tag $IMAGE_ID "${DH_IMAGE_ID}":scheduler-"${SCHEDULER_VERSION}""
+          docker tag $IMAGE_ID "${DH_IMAGE_ID}":scheduler-"${SCHEDULER_VERSION}"
           docker tag $IMAGE_ID "${DH_IMAGE_ID}":scheduler-latest
 
           docker push "${DH_IMAGE_ID}":scheduler-"${SCHEDULER_VERSION}"
@@ -405,7 +405,7 @@ jobs:
 
           echo "${{ secrets.DOCKERHUB_PW }}" | docker login registry-1.docker.io -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
 
-          DH_IMAGE_ID=$(sed -n 's/^DOCKER_REGISTRY=//p' .dockerhub.env)/
+          DH_IMAGE_ID=$(sed -n 's/^DOCKER_REGISTRY=//p' .dockerhub.env)
 
           docker tag $IMAGE_ID_STORAGE "${DH_IMAGE_ID}":storage-"${STORAGE_VERSION}"
           docker tag $IMAGE_ID_STORAGE "${DH_IMAGE_ID}":storage-latest
@@ -454,7 +454,7 @@ jobs:
 
           echo "${{ secrets.DOCKERHUB_PW }}" | docker login registry-1.docker.io -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
 
-          DH_IMAGE_ID=$(sed -n 's/^DOCKER_REGISTRY=//p' .dockerhub.env)/
+          DH_IMAGE_ID=$(sed -n 's/^DOCKER_REGISTRY=//p' .dockerhub.env)
 
           docker tag $IMAGE_ID "${DH_IMAGE_ID}":transformation-"${TRANSFORMATION_VERSION}"
           docker tag $IMAGE_ID "${DH_IMAGE_ID}":transformation-latest
@@ -497,7 +497,7 @@ jobs:
 
           echo "${{ secrets.DOCKERHUB_PW }}" | docker login registry-1.docker.io -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
 
-          DH_IMAGE_ID=$(sed -n 's/^DOCKER_REGISTRY=//p' .dockerhub.env)/
+          DH_IMAGE_ID=$(sed -n 's/^DOCKER_REGISTRY=//p' .dockerhub.env)
 
           docker tag $IMAGE_ID "${DH_IMAGE_ID}":notification-"${NOTIFICATION_VERSION}"
           docker tag $IMAGE_ID "${DH_IMAGE_ID}":notificationlatest
@@ -540,7 +540,7 @@ jobs:
 
           echo "${{ secrets.DOCKERHUB_PW }}" | docker login registry-1.docker.io -u ${{ secrets.DOCKERHUB_USER }} --password-stdin
 
-          DH_IMAGE_ID=$(sed -n 's/^DOCKER_REGISTRY=//p' .dockerhub.env)/
+          DH_IMAGE_ID=$(sed -n 's/^DOCKER_REGISTRY=//p' .dockerhub.env)
 
           docker tag $IMAGE_ID "${DH_IMAGE_ID}":ui-"${UI_VERSION}"
           docker tag $IMAGE_ID "${DH_IMAGE_ID}":ui-latest
